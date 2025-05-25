@@ -67,6 +67,7 @@ const UserCreateModal = (props: IProps) => {
       <div>
         <label htmlFor="">Password:</label>
         <Input
+          type="password"
           value={password}
           onChange={(e) => { setPassword(e.target.value) }}
         />

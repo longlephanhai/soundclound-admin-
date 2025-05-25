@@ -1,8 +1,9 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Table, Button, type TableProps } from 'antd';
+import { Table, Button, type TableProps, Popconfirm, type PopconfirmProps, message } from 'antd';
 import { useState } from 'react';
 import UserCreateModal from './user.create.modal';
 import UserUpdateModal from './user.update.modal';
+
 
 export interface IUser {
   _id: string;
@@ -21,6 +22,8 @@ const UsersTable = () => {
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
+  const [dataUpdate, setDataUpdate] = useState<IUser | null>(null);
+
   const [data, setData] = useState<IUser[]>([{
     _id: '1',
     email: 'long@gmail.com',
@@ -31,6 +34,16 @@ const UsersTable = () => {
     gender: 'Nam',
     address: 'Hanoi, Vietnam'
   }]);
+
+  const confirm: PopconfirmProps['onConfirm'] = (e) => {
+    console.log(e);
+    message.success('Click on Yes');
+  };
+
+  const cancel: PopconfirmProps['onCancel'] = (e) => {
+    console.log(e);
+    message.error('Click on No');
+  };
 
 
   const columns: TableProps<IUser>['columns'] = [
@@ -55,12 +68,27 @@ const UsersTable = () => {
       render: (_, record) => {
         return (
           <>
-            <Button onClick={() => { setIsUpdateModalOpen(true) }}>Edit</Button>
+            <Button type='primary' onClick={() => {
+              setDataUpdate(record);
+              setIsUpdateModalOpen(true)
+            }}>Edit
+            </Button>
+            <Popconfirm
+              title="Delete this user?"
+              description="Are you sure to delete this user?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button danger>Delete</Button>
+            </Popconfirm>
           </>
         )
       }
     }
   ]
+
 
 
   return (
@@ -104,6 +132,8 @@ const UsersTable = () => {
         setData={setData}
         isUpdateModalOpen={isUpdateModalOpen}
         setIsUpdateModalOpen={setIsUpdateModalOpen}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
       />
     </>
   )
