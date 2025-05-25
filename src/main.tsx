@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App.tsx'
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import UsersPage from './pages/users.page.tsx';
 
 const router = createBrowserRouter([
   {
@@ -14,9 +14,10 @@ const router = createBrowserRouter([
   },
   {
     path: '/users',
-    element: <div>manage users</div>,
+    element: <UsersPage />,
   }
 ]);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />
