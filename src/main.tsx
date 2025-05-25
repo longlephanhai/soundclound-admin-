@@ -46,7 +46,7 @@ const LayoutAdmin = () => {
     <div>
       <Header />
       <Outlet />
-      <footer>Footer</footer>
+      {/* <footer>Footer</footer> */}
     </div>
   )
 }

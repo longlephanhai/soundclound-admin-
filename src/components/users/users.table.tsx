@@ -7,6 +7,10 @@ interface IUser {
   email: string;
   name: string;
   role: string;
+  password: string;
+  age: string
+  gender: string;
+  address: string;
 }
 
 const UsersTable = () => {
@@ -18,6 +22,10 @@ const UsersTable = () => {
     email: 'long@gmail.com',
     name: 'Long',
     role: 'Admin',
+    password: '123456',
+    age: '18',
+    gender: 'Nam',
+    address: 'Hanoi, Vietnam'
   }]);
 
   const [name, setName] = useState<string>('');
@@ -47,24 +55,28 @@ const UsersTable = () => {
   ]
 
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
   const handleOk = () => {
     setData([...data, {
-      _id: Math.random().toString(36).substring(2, 15), // Generate a random ID
+      _id: Math.random().toString(36).substring(2, 15),
       email,
       name,
       role,
-
+      password,
+      age,
+      gender,
+      address
     }])
+    setName('');
+    setEmail('');
+    setPassword('');
+    setAge('');
+    setGender('');
+    setAddress('');
+    setRole('');
     setIsModalOpen(false);
   };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+
 
   return (
     <>
@@ -82,7 +94,7 @@ const UsersTable = () => {
           <Button
             icon={<PlusOutlined />}
             type='primary'
-            onClick={showModal}
+            onClick={() => { setIsModalOpen(true); }}
           >
             Add new
           </Button>
@@ -100,7 +112,7 @@ const UsersTable = () => {
         closable={{ 'aria-label': 'Custom Close Button' }}
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={() => { setIsModalOpen(false); }}
         maskClosable={false}
         okText="Add"
         cancelText="Cancel"

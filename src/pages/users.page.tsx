@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import UsersTable from "../components/users/users.table"
-import '../styles/user.css'
+// import '../styles/user.css'
 interface IUser {
   email: string;
   name: string;
