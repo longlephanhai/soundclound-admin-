@@ -15,7 +15,12 @@ export interface IUser {
   gender: string;
   address: string;
 }
-
+interface IPageMeta {
+  current: number,
+  pageSize: number,
+  pages: number,
+  total: number,
+}
 const UsersTable = () => {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -34,6 +39,13 @@ const UsersTable = () => {
     gender: 'Nam',
     address: 'Hanoi, Vietnam'
   }]);
+
+  const [meta, setMeta] = useState<IPageMeta>({
+    current: 1,
+    pageSize: 10,
+    pages: 0,
+    total: 0,
+  })
 
   const confirm: PopconfirmProps['onConfirm'] = (e) => {
     console.log(e);
@@ -81,14 +93,13 @@ const UsersTable = () => {
               okText="Yes"
               cancelText="No"
             >
-              <Button danger>Delete</Button>
+              <Button style={{ marginLeft: '20px' }} danger>Delete</Button>
             </Popconfirm>
           </>
         )
       }
     }
   ]
-
 
 
   return (
@@ -118,7 +129,23 @@ const UsersTable = () => {
         columns={columns}
         dataSource={data}
         rowKey="_id"
+        pagination={
+          {
+            current: meta.current,
+            pageSize: meta.pageSize,
+            total: meta.total,
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+            onChange: (page: number, pageSize: number) => {
+              setMeta({
+                ...meta,
+                current: page,
+                pageSize: pageSize,
+              });
+            }
+          }
+        }
       />
+
 
       <UserCreateModal
         data={data}
