@@ -11,6 +11,8 @@ import UsersPage from './pages/users.page.tsx';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import './App.scss'
+
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
