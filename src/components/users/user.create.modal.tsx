@@ -1,4 +1,5 @@
-import { Input, Modal } from "antd";
+import type { FormProps } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useState } from "react";
 import type { IUser } from "./users.table";
 interface IProps {
@@ -7,6 +8,13 @@ interface IProps {
   isCreateModalOpen: boolean
   setIsCreateModalOpen: (v: boolean) => void;
 }
+
+type FieldType = {
+  username?: string;
+  password?: string;
+  remember?: string;
+};
+
 const UserCreateModal = (props: IProps) => {
   const { data, setData, isCreateModalOpen, setIsCreateModalOpen } = props;
 
@@ -17,6 +25,8 @@ const UserCreateModal = (props: IProps) => {
   const [gender, setGender] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [role, setRole] = useState<string>('');
+
+  const { Option } = Select;
 
   const handleOk = () => {
     setData([...data, {
@@ -39,6 +49,10 @@ const UserCreateModal = (props: IProps) => {
     setIsCreateModalOpen(false);
   };
 
+  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+    console.log('Success:', values);
+  };
+
   return (
     <Modal
       title="Add new user"
@@ -49,8 +63,85 @@ const UserCreateModal = (props: IProps) => {
       maskClosable={false}
       okText="Add"
       cancelText="Cancel"
+      footer={null}
     >
-      <div>
+      <Form
+        name="basic"
+        onFinish={onFinish}
+        autoComplete="off"
+        layout="vertical"
+      >
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: 'Please input your email!' }]}
+        >
+          <Input type='email' />
+        </Form.Item>
+
+        <Form.Item<FieldType>
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          label="Age"
+          name="age"
+          rules={[{ required: true, message: 'Please input your age!' }]}
+        >
+          <InputNumber min={1} max={100} style={{width:'100%'}} />
+        </Form.Item>
+
+        <Form.Item
+          label="Address"
+          name="address"
+          rules={[{ required: true, message: 'Please input your address!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
+          <Select
+            placeholder="Select a option and change input text above"
+            // onChange={onGenderChange}
+            allowClear
+          >
+            <Option value="male">male</Option>
+            <Option value="female">female</Option>
+            <Option value="other">other</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item name="role" label="Role" rules={[{ required: true }]}>
+          <Select
+            placeholder="Select a option and change input text above"
+            // onChange={onGenderChange}
+            allowClear
+          >
+            <Option value="admin">Admin</Option>
+            <Option value="user">User</Option>
+          </Select>
+        </Form.Item>
+
+
+        <Form.Item label={null}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+      {/* <div>
         <label htmlFor="">Name:</label>
         <Input
           value={name}
@@ -99,7 +190,7 @@ const UserCreateModal = (props: IProps) => {
           value={role}
           onChange={(e) => { setRole(e.target.value) }}
         />
-      </div>
+      </div> */}
     </Modal>
   )
 }

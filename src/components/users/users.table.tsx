@@ -141,7 +141,8 @@ const UsersTable = () => {
                 current: page,
                 pageSize: pageSize,
               });
-            }
+            },
+            showSizeChanger: true,
           }
         }
       />
