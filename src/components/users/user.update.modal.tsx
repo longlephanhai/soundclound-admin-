@@ -1,4 +1,4 @@
-import { Input, Modal } from "antd";
+import { Button, Form, Input, InputNumber, Modal, Select, type FormProps } from "antd";
 import { useEffect, useState } from "react";
 import type { IUser } from "./users.table";
 interface IProps {
@@ -9,9 +9,14 @@ interface IProps {
   dataUpdate: IUser | null;
   setDataUpdate: (data: IUser | null) => void;
 }
+type FieldType = {
+  username?: string;
+  password?: string;
+  remember?: string;
+};
 const UserUpdateModal = (props: IProps) => {
+  
   const { data, setData, isUpdateModalOpen, setIsUpdateModalOpen, dataUpdate, setDataUpdate } = props;
-
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -32,8 +37,14 @@ const UserUpdateModal = (props: IProps) => {
     }
   }, [dataUpdate])
 
+  const { Option } = Select;
+
   const handleOk = () => {
     // TODO: Call API to update user
+  };
+
+  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+    console.log('Success:', values);
   };
 
   return (
@@ -49,65 +60,103 @@ const UserUpdateModal = (props: IProps) => {
       maskClosable={false}
       okText="Update"
       cancelText="Cancel"
+      footer={null}
     >
-      <div style={{ display: 'none' }}>
-        <label htmlFor="">ID:</label>
-        <Input
-          value={dataUpdate?._id}
-          onChange={(e) => { setName(e.target.value) }}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Name:</label>
-        <Input
-          value={name}
-          onChange={(e) => { setName(e.target.value) }}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Email:</label>
-        <Input
-          value={email}
-          onChange={(e) => { setEmail(e.target.value) }}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Password:</label>
-        <Input
-          type="password"
-          disabled
-          value={password}
-          onChange={(e) => { setPassword(e.target.value) }}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Age:</label>
-        <Input
-          value={age}
-          onChange={(e) => { setAge(e.target.value) }}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Gender:</label>
-        <Input
-          value={gender}
-          onChange={(e) => { setGender(e.target.value) }}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Address</label>
-        <Input
-          value={address}
-          onChange={(e) => { setAddress(e.target.value) }}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Role</label>
-        <Input
-          value={role}
-          onChange={(e) => { setRole(e.target.value) }}
-        />
-      </div>
+      <Form
+        name="basic"
+        onFinish={onFinish}
+        autoComplete="off"
+        layout="vertical"
+
+      >
+        <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: 'Please input your email!' }]}
+        >
+          <Input type='email' />
+        </Form.Item>
+
+        <Form.Item<FieldType>
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+          style={{
+            marginBottom: '5px'
+          }}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
+          label="Age"
+          name="age"
+          rules={[{ required: true, message: 'Please input your age!' }]}
+        >
+          <InputNumber min={1} max={100} style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
+          label="Address"
+          name="address"
+          rules={[{ required: true, message: 'Please input your address!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item style={{
+          marginBottom: '5px'
+        }} name="gender" label="Gender" rules={[{ required: true }]}>
+          <Select
+            placeholder="Select a option and change input text above"
+            // onChange={onGenderChange}
+            allowClear
+          >
+            <Option value="male">male</Option>
+            <Option value="female">female</Option>
+            <Option value="other">other</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item style={{
+          marginBottom: '5px'
+        }} name="role" label="Role" rules={[{ required: true }]}>
+          <Select
+            placeholder="Select a option and change input text above"
+            // onChange={onGenderChange}
+            allowClear
+          >
+            <Option value="admin">Admin</Option>
+            <Option value="user">User</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </Modal>
   )
 }

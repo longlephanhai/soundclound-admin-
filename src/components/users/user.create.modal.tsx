@@ -1,5 +1,5 @@
 import type { FormProps } from 'antd';
-import { Button, Checkbox, Form, Input, InputNumber, Modal, Select } from 'antd';
+import { Button,  Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useState } from "react";
 import type { IUser } from "./users.table";
 interface IProps {
@@ -70,8 +70,12 @@ const UserCreateModal = (props: IProps) => {
         onFinish={onFinish}
         autoComplete="off"
         layout="vertical"
+
       >
         <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
           label="Name"
           name="name"
           rules={[{ required: true, message: 'Please input your username!' }]}
@@ -80,6 +84,9 @@ const UserCreateModal = (props: IProps) => {
         </Form.Item>
 
         <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
           label="Email"
           name="email"
           rules={[{ required: true, message: 'Please input your email!' }]}
@@ -91,19 +98,28 @@ const UserCreateModal = (props: IProps) => {
           label="Password"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
+          style={{
+            marginBottom: '5px'
+          }}
         >
           <Input.Password />
         </Form.Item>
 
         <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
           label="Age"
           name="age"
           rules={[{ required: true, message: 'Please input your age!' }]}
         >
-          <InputNumber min={1} max={100} style={{width:'100%'}} />
+          <InputNumber min={1} max={100} style={{ width: '100%' }} />
         </Form.Item>
 
         <Form.Item
+          style={{
+            marginBottom: '5px'
+          }}
           label="Address"
           name="address"
           rules={[{ required: true, message: 'Please input your address!' }]}
@@ -111,7 +127,9 @@ const UserCreateModal = (props: IProps) => {
           <Input />
         </Form.Item>
 
-        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
+        <Form.Item style={{
+          marginBottom: '5px'
+        }} name="gender" label="Gender" rules={[{ required: true }]}>
           <Select
             placeholder="Select a option and change input text above"
             // onChange={onGenderChange}
@@ -123,7 +141,9 @@ const UserCreateModal = (props: IProps) => {
           </Select>
         </Form.Item>
 
-        <Form.Item name="role" label="Role" rules={[{ required: true }]}>
+        <Form.Item style={{
+          marginBottom: '5px'
+        }} name="role" label="Role" rules={[{ required: true }]}>
           <Select
             placeholder="Select a option and change input text above"
             // onChange={onGenderChange}
@@ -134,8 +154,7 @@ const UserCreateModal = (props: IProps) => {
           </Select>
         </Form.Item>
 
-
-        <Form.Item label={null}>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
