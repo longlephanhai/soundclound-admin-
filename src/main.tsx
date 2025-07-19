@@ -12,6 +12,8 @@ import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import './App.scss'
+import TracksPage from './pages/tracks.page.tsx';
+import CommentsPage from './pages/comments.page.tsx';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -63,6 +65,14 @@ const router = createBrowserRouter([
       {
         path: 'users',
         element: <UsersPage />,
+      },
+      {
+        path: 'tracks',
+        element: <TracksPage />,
+      },
+      {
+        path: "comments",
+        element: <CommentsPage />
       }
     ]
   },
